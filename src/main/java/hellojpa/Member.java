@@ -9,12 +9,27 @@ import javax.persistence.*;
         initialValue = 1, allocationSize = 50
 )
 public class Member {
+    @Id
+    @GeneratedValue
+    @Column(name = "MEMBER_ID")
+    private Long id;
 
-    public Member() {}
+    @Column(name = "USERNAME")
+    private String username;
 
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
+//    @Column(name = "TEAM_ID")
+//    private Long teamId;
+
+    @ManyToOne
+    @JoinColumn(name = "TEAM_ID")
+    private Team team;
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public Long getId() {
@@ -25,19 +40,11 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE
-    ,generator = "MEMBER_SEQ_GENERATOR")
-    private Long id;
-    private String name;
-
-
 }
