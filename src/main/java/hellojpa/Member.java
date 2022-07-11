@@ -1,6 +1,8 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @SequenceGenerator(
@@ -17,20 +19,16 @@ public class Member {
     @Column(name = "USERNAME")
     private String username;
 
-//    @Column(name = "TEAM_ID")
-//    private Long teamId;
-
     @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
 
-    public Team getTeam() {
-        return team;
-    }
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
-    public void setTeam(Team team) {
-        this.team = team;
-    }
+    @OneToMany(mappedBy = "member")
+    private List<MemberProduct> memberProducts = new ArrayList<>();
 
     public Long getId() {
         return id;
